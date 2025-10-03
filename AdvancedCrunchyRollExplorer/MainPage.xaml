@@ -1,0 +1,55 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdvancedCrunchyRollExplorer.MainPage">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Search Bar -->
+        <SearchBar Grid.Row="0" Placeholder="Search..."
+                   Text="{Binding SearchText}"
+                   TextChanged="OnSearchTextChanged"/>
+
+        <!-- Sorting controls -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="10" Padding="10">
+            <Picker Title="Sort by" 
+                    ItemsSource="{Binding SortColumns}" 
+                    SelectedItem="{Binding SelectedSortColumn}"/>
+            <Picker Title="Order" 
+                    ItemsSource="{Binding SortOrders}" 
+                    SelectedItem="{Binding SelectedSortOrder}"/>
+        </HorizontalStackLayout>
+
+        <!-- Scrollable list -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding FilteredAnimes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" ColumnDefinitions="100,*">
+                        <Image Source="{Binding ImageSource}" 
+                               WidthRequest="90" HeightRequest="120"
+                               Aspect="AspectFill"
+                               Grid.Column="0"/>
+
+                        <StackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="{Binding Description}" FontSize="12"
+                                   LineBreakMode="WordWrap" MaxLines="3"/>
+                            <Label Text="{Binding GenresDisplay}" FontSize="12" TextColor="Gray"/>
+                            <Label FontSize="12" TextColor="Gray">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Episodes: " FontSize="12" TextColor="Gray"/>
+                                        <Span Text="{Binding Episodes}" FontSize="12" TextColor="Gray"/>
+                                        <Span Text=", Seasons: " FontSize="12" TextColor="Gray"/>
+                                        <Span Text="{Binding Seasons}" FontSize="12" TextColor="Gray"/>
+                                        <Span Text=", Year: " FontSize="12" TextColor="Gray"/>
+                                        <Span Text="{Binding Publish_Date}" FontSize="12" TextColor="Gray"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
